@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
-from lib.keyword_search import search_command,build_command,tf_command,idf_command
+from ast import arg
+from lib.keyword_search import search_command,build_command,tf_command,idf_command,tfidf_command
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Keyword Search CLI")
@@ -18,6 +19,10 @@ def main() -> None:
 
     search_parser = subparsers.add_parser("idf", help="Build inverse document frequency")
     search_parser.add_argument("term", type=str, help="term to which we need to find idf for")
+
+    search_parser = subparsers.add_parser("tfidf", help="Build term frequency Inverse Document frequency")
+    search_parser.add_argument("doc_id", type=int, help="doc id to check")
+    search_parser.add_argument("term", type=str, help="term to which we need to find count for")
 
     args = parser.parse_args()
 
@@ -38,6 +43,9 @@ def main() -> None:
         case 'idf':
             idf_command(args.term)
 
+        case 'tfidf':
+            tfidf_command(args.doc_id,args.term)
+            
         case _:
             parser.print_help()
 
